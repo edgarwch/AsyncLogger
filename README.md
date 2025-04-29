@@ -39,3 +39,5 @@ int main() {
     logger.LogCritical("Critical error!");
     return 0;
 }
+
+
