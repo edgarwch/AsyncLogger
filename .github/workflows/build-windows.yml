@@ -1,0 +1,31 @@
+name: Build GeneralLogger DLL (Windows)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up MSBuild path
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Build the DLL
+      run: |
+        msbuild GeneralLogger.sln /p:Configuration=Release /p:Platform=x64
+
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: GeneralLogger-Windows-Artifacts
+        path: |
+          **/Release/*.dll
+          **/Release/*.lib
+          include/*.h
